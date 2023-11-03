@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/treeflix.dir/src/main.c.o CMakeFiles/treeflix.dir/src/teste.c.o -o treeflix 
