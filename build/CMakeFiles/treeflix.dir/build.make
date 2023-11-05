@@ -83,31 +83,33 @@ CMakeFiles/treeflix.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/treeflix.dir/src/main.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/guilherme/Github/treeflix/src/main.c -o CMakeFiles/treeflix.dir/src/main.c.s
 
-CMakeFiles/treeflix.dir/src/teste.c.o: CMakeFiles/treeflix.dir/flags.make
-CMakeFiles/treeflix.dir/src/teste.c.o: /home/guilherme/Github/treeflix/src/teste.c
-CMakeFiles/treeflix.dir/src/teste.c.o: CMakeFiles/treeflix.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/guilherme/Github/treeflix/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/treeflix.dir/src/teste.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/treeflix.dir/src/teste.c.o -MF CMakeFiles/treeflix.dir/src/teste.c.o.d -o CMakeFiles/treeflix.dir/src/teste.c.o -c /home/guilherme/Github/treeflix/src/teste.c
+CMakeFiles/treeflix.dir/src/movie.c.o: CMakeFiles/treeflix.dir/flags.make
+CMakeFiles/treeflix.dir/src/movie.c.o: /home/guilherme/Github/treeflix/src/movie.c
+CMakeFiles/treeflix.dir/src/movie.c.o: CMakeFiles/treeflix.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/guilherme/Github/treeflix/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/treeflix.dir/src/movie.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/treeflix.dir/src/movie.c.o -MF CMakeFiles/treeflix.dir/src/movie.c.o.d -o CMakeFiles/treeflix.dir/src/movie.c.o -c /home/guilherme/Github/treeflix/src/movie.c
 
-CMakeFiles/treeflix.dir/src/teste.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/treeflix.dir/src/teste.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/guilherme/Github/treeflix/src/teste.c > CMakeFiles/treeflix.dir/src/teste.c.i
+CMakeFiles/treeflix.dir/src/movie.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/treeflix.dir/src/movie.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/guilherme/Github/treeflix/src/movie.c > CMakeFiles/treeflix.dir/src/movie.c.i
 
-CMakeFiles/treeflix.dir/src/teste.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/treeflix.dir/src/teste.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/guilherme/Github/treeflix/src/teste.c -o CMakeFiles/treeflix.dir/src/teste.c.s
+CMakeFiles/treeflix.dir/src/movie.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/treeflix.dir/src/movie.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/guilherme/Github/treeflix/src/movie.c -o CMakeFiles/treeflix.dir/src/movie.c.s
 
 # Object files for target treeflix
 treeflix_OBJECTS = \
 "CMakeFiles/treeflix.dir/src/main.c.o" \
-"CMakeFiles/treeflix.dir/src/teste.c.o"
+"CMakeFiles/treeflix.dir/src/movie.c.o"
 
 # External object files for target treeflix
 treeflix_EXTERNAL_OBJECTS =
 
 treeflix: CMakeFiles/treeflix.dir/src/main.c.o
-treeflix: CMakeFiles/treeflix.dir/src/teste.c.o
+treeflix: CMakeFiles/treeflix.dir/src/movie.c.o
 treeflix: CMakeFiles/treeflix.dir/build.make
+treeflix: /usr/lib/libcurses.so
+treeflix: /usr/lib/libform.so
 treeflix: CMakeFiles/treeflix.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/guilherme/Github/treeflix/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable treeflix"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/treeflix.dir/link.txt --verbose=$(VERBOSE)

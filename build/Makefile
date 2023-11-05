@@ -153,29 +153,29 @@ src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/main.c.s
 .PHONY : src/main.c.s
 
-src/teste.o: src/teste.c.o
-.PHONY : src/teste.o
+src/movie.o: src/movie.c.o
+.PHONY : src/movie.o
 
 # target to build an object file
-src/teste.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/teste.c.o
-.PHONY : src/teste.c.o
+src/movie.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie.c.o
+.PHONY : src/movie.c.o
 
-src/teste.i: src/teste.c.i
-.PHONY : src/teste.i
+src/movie.i: src/movie.c.i
+.PHONY : src/movie.i
 
 # target to preprocess a source file
-src/teste.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/teste.c.i
-.PHONY : src/teste.c.i
+src/movie.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie.c.i
+.PHONY : src/movie.c.i
 
-src/teste.s: src/teste.c.s
-.PHONY : src/teste.s
+src/movie.s: src/movie.c.s
+.PHONY : src/movie.s
 
 # target to generate assembly for a file
-src/teste.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/teste.c.s
-.PHONY : src/teste.c.s
+src/movie.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie.c.s
+.PHONY : src/movie.c.s
 
 # Help Target
 help:
@@ -189,9 +189,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/teste.o"
-	@echo "... src/teste.i"
-	@echo "... src/teste.s"
+	@echo "... src/movie.o"
+	@echo "... src/movie.i"
+	@echo "... src/movie.s"
 .PHONY : help
 
 

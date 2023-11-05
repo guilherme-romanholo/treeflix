@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/treeflix.dir/src/main.c.o"
   "CMakeFiles/treeflix.dir/src/main.c.o.d"
-  "CMakeFiles/treeflix.dir/src/teste.c.o"
-  "CMakeFiles/treeflix.dir/src/teste.c.o.d"
+  "CMakeFiles/treeflix.dir/src/movie.c.o"
+  "CMakeFiles/treeflix.dir/src/movie.c.o.d"
   "treeflix"
   "treeflix.pdb"
 )
