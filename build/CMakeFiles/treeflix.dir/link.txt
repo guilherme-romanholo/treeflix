@@ -1,1 +1,1 @@
-/usr/bin/cc -rdynamic CMakeFiles/treeflix.dir/src/main.c.o CMakeFiles/treeflix.dir/src/movie.c.o -o treeflix  -lcurses -lform 
+/usr/bin/cc -rdynamic CMakeFiles/treeflix.dir/src/main.c.o CMakeFiles/treeflix.dir/src/movie.c.o CMakeFiles/treeflix.dir/src/buffer.c.o -o treeflix  -lcurses -lform 

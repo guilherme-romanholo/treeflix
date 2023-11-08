@@ -129,6 +129,30 @@ treeflix/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/build
 .PHONY : treeflix/fast
 
+src/buffer.o: src/buffer.c.o
+.PHONY : src/buffer.o
+
+# target to build an object file
+src/buffer.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/buffer.c.o
+.PHONY : src/buffer.c.o
+
+src/buffer.i: src/buffer.c.i
+.PHONY : src/buffer.i
+
+# target to preprocess a source file
+src/buffer.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/buffer.c.i
+.PHONY : src/buffer.c.i
+
+src/buffer.s: src/buffer.c.s
+.PHONY : src/buffer.s
+
+# target to generate assembly for a file
+src/buffer.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/buffer.c.s
+.PHONY : src/buffer.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -186,6 +210,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... treeflix"
+	@echo "... src/buffer.o"
+	@echo "... src/buffer.i"
+	@echo "... src/buffer.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

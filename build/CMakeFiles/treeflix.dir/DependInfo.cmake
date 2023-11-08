@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/guilherme/Github/treeflix/src/buffer.c" "CMakeFiles/treeflix.dir/src/buffer.c.o" "gcc" "CMakeFiles/treeflix.dir/src/buffer.c.o.d"
   "/home/guilherme/Github/treeflix/src/main.c" "CMakeFiles/treeflix.dir/src/main.c.o" "gcc" "CMakeFiles/treeflix.dir/src/main.c.o.d"
   "/home/guilherme/Github/treeflix/src/movie.c" "CMakeFiles/treeflix.dir/src/movie.c.o" "gcc" "CMakeFiles/treeflix.dir/src/movie.c.o.d"
   )

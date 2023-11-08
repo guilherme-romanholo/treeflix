@@ -25,7 +25,3 @@ void Movie__destroy(Movie *self) {
     free(self);
   }
 }
-
-char *Movie__getTitle(Movie *self) {
-  return self->title;
-}

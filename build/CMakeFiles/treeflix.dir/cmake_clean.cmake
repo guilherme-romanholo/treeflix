@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/treeflix.dir/src/buffer.c.o"
+  "CMakeFiles/treeflix.dir/src/buffer.c.o.d"
   "CMakeFiles/treeflix.dir/src/main.c.o"
   "CMakeFiles/treeflix.dir/src/main.c.o.d"
   "CMakeFiles/treeflix.dir/src/movie.c.o"

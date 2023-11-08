@@ -1,5 +1,6 @@
-CMakeFiles/treeflix.dir/src/main.c.o: \
- /home/guilherme/Github/treeflix/src/main.c /usr/include/stdc-predef.h \
+CMakeFiles/treeflix.dir/src/buffer.c.o: \
+ /home/guilherme/Github/treeflix/src/buffer.c /usr/include/stdc-predef.h \
+ /home/guilherme/Github/treeflix/src/../include/buffer.h \
  /usr/include/stdio.h /usr/include/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
  /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
@@ -30,6 +31,6 @@ CMakeFiles/treeflix.dir/src/main.c.o: \
  /usr/include/bits/pthreadtypes-arch.h \
  /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
  /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-float.h \
- /home/guilherme/Github/treeflix/src/../include/movie.h \
- /home/guilherme/Github/treeflix/src/../include/buffer.h
+ /usr/include/bits/stdlib-float.h /usr/include/string.h \
+ /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
+ /usr/include/strings.h
