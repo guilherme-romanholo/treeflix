@@ -14,7 +14,7 @@ void Node__rewrite(Node *node, int rrn);
 Node *Node__read(int rrn);
 void Node__print(Node *node);
 void Node__insert(Node *root, char *key, int data_rrn);
-BPTree *BPTree__create();
+BPTree *BPTree__init();
 void debug();
 
 #endif // !BPTREE_H

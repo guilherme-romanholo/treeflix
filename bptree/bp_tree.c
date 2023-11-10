@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define ORDER 3
+#define ORDER 4
 
 const char *TREE_FILENAME = "ibtree.idx";
+const char *ROOT_FILENAME = "root.dat";
 
 struct node {
   int rrn;
@@ -18,15 +19,28 @@ struct node {
   int next_node;
 };
 
-BPTree *BPTree__create() {
-  // FILE *fp = fopen(TREE_FILENAME, );
+BPTree *BPTree__init() {
+  FILE *fp = fopen(ROOT_FILENAME, "r");
 
   BPTree *tree = malloc(sizeof(BPTree));
-
-  tree->root = Node__create(1);
   tree->insert = Node__insert;
 
-  Node__append(tree->root);
+  if (fp == NULL) {
+    tree->root = Node__create(1);
+
+    Node__append(tree->root);
+
+    fp = fopen(ROOT_FILENAME, "w");
+    fprintf(fp, "{Root_rrn: %d}\n", 0);
+  } else {
+    int root_rrn;
+
+    fp = fopen(ROOT_FILENAME, "r");
+    fscanf(fp, "{Root_rrb: %d}\n", &root_rrn);
+    tree->root = Node__read(root_rrn);
+  }
+
+  fclose(fp);
 
   return tree;
 }
@@ -167,21 +181,22 @@ void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
         }
 
         strcpy(leaf->keys[i], key);
+        leaf->num_keys++;
         leaf->data_rrn[i] = data_rrn;
 
         break;
       } else if (i + 1 == leaf->num_keys) {
 
         strcpy(leaf->keys[i + 1], key);
+        leaf->num_keys++;
         break;
       }
     }
   } else {
     strcpy(leaf->keys[0], key);
     leaf->data_rrn[0] = data_rrn;
+    leaf->num_keys++;
   }
-
-  leaf->num_keys++;
 
   Node__rewrite(leaf, leaf->rrn);
 }
