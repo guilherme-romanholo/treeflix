@@ -245,6 +245,28 @@ void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
   Node__rewrite(leaf, leaf->rrn);
 }
 
+// SPLIT EM UTILIDADES
+void Node__split(Node *dest, Node *ori) {
+  int mid = ((int)ceil((float)ori->num_keys / 2)) - 1;
+  int children_size = Node__children_size(ori);
+
+  for (int i = mid + 1, j = 0; i < ori->num_keys; i++, j++) {
+    strcpy(dest->keys[j], ori->keys[i]);
+    strcpy(ori->keys[i], "-----");
+
+    dest->data_rrn[j] = ori->data_rrn[i];
+    ori->data_rrn[i] = -1;
+
+    dest->num_keys++;
+    ori->num_keys--;
+  }
+
+  for (int i = mid + 1, j = 0; i < children_size; i++, j--) {
+    dest->children[j] = ori->children[i];
+    ori->children[i] = -1;
+  }
+}
+
 void Node__insert_in_parent(Node *old_node, Node *new_node,
                             char *promoted_key) {
   Node *root;
@@ -269,6 +291,37 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
     Node__rewrite(new_root, new_root->rrn);
 
     return;
+  }
+
+  // DAQUI PRA BAIXO TA A MODA KRL
+  // ATUALIZAR O SPLIT DO COPY KEYS AND DATA INSERT
+  Node *parent_node = Node__read(old_node->parent);
+  int children_size = Node__children_size(parent_node);
+
+  for (int i = 0; i < children_size; i++) {
+    if (parent_node->children[i] == old_node->rrn) {
+      int j;
+
+      for (j = parent_node->num_keys - 1; j > i + 1; j--)
+        strcpy(parent_node->keys[j], parent_node->keys[j - 1]);
+      strcpy(parent_node->keys[j], promoted_key);
+
+      for (j = children_size - 1; j > i + 1; j--)
+        parent_node->children[j] = parent_node->children[j - 1];
+      parent_node->children[j] = new_node->rrn;
+    }
+
+    if (parent_node->num_keys == ORDER) {
+      Node *parent_dash = Node__create(0);
+
+      parent_dash->parent = parent_node->parent;
+      Node__split(parent_dash, parent_node);
+
+      int mid = ((int)ceil((float)parent_node->num_keys / 2)) - 1;
+      strcpy(promoted_key, parent_node->keys[mid]);
+
+      // if mid == 0:
+    }
   }
 }
 
