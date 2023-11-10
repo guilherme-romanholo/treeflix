@@ -19,61 +19,7 @@ struct node {
   int next_node;
 };
 
-BPTree *BPTree__init() {
-  FILE *fp = fopen(ROOT_FILENAME, "r");
-
-  BPTree *tree = malloc(sizeof(BPTree));
-  tree->insert = Node__insert;
-
-  if (fp == NULL) {
-    tree->root = Node__create(1);
-
-    Node__append(tree->root);
-
-    fp = fopen(ROOT_FILENAME, "w");
-    fprintf(fp, "{Root_rrn: %d}\n", 0);
-  } else {
-    int root_rrn;
-
-    fp = fopen(ROOT_FILENAME, "r");
-    fscanf(fp, "{Root_rrb: %d}\n", &root_rrn);
-    tree->root = Node__read(root_rrn);
-  }
-
-  fclose(fp);
-
-  return tree;
-}
-
-Node *Node__create(int is_leaf) {
-  Node *node = malloc(sizeof(Node));
-
-  node->rrn = -1;
-  node->is_leaf = is_leaf;
-  node->num_keys = 0;
-  node->parent = -1;
-  node->next_node = -1;
-
-  for (int i = 0; i < ORDER; i++) {
-    strcpy(node->keys[i], "-----");
-    node->data_rrn[i] = -1;
-    node->children[i] = -1;
-  }
-  node->children[ORDER] = -1;
-
-  return node;
-}
-
-void debug() {
-  FILE *fp = fopen(TREE_FILENAME, "rb");
-  Node *node = malloc(sizeof(Node));
-
-  while (fread(node, sizeof(Node), 1, fp) == 1)
-    Node__print(node);
-
-  fclose(fp);
-  free(node);
-}
+/* ACESSO AO ARQUIVO */
 
 void Node__append(Node *node) {
   FILE *fp = fopen(TREE_FILENAME, "ab");
@@ -108,7 +54,21 @@ Node *Node__read(int rrn) {
   return node;
 }
 
+/* UTILIDADES */
+
+void debug() {
+  FILE *fp = fopen(TREE_FILENAME, "rb");
+  Node *node = malloc(sizeof(Node));
+
+  while (fread(node, sizeof(Node), 1, fp) == 1)
+    Node__print(node);
+
+  fclose(fp);
+  free(node);
+}
+
 void Node__print(Node *node) {
+  printf("--------------------\n");
   printf("RRN: %d\n", node->rrn);
   printf("Parent: %d\n", node->parent);
   printf("Num keys: %d\n", node->num_keys);
@@ -139,8 +99,91 @@ int Node__children_size(Node *node) {
   return size;
 }
 
-Node *Node__search(Node *root, char *key) {
-  Node *cur = root;
+void Node__copy_keys_and_data(Node *dest, Node *ori, int s, int e) {
+  for (int i = s, j = 0; i < e; i++, j++) {
+    strcpy(dest->keys[j], ori->keys[i]);
+    strcpy(ori->keys[i], "-----");
+
+    dest->data_rrn[j] = ori->data_rrn[i];
+    ori->data_rrn[i] = -1;
+
+    dest->num_keys++;
+    ori->num_keys--;
+  }
+}
+
+/* ROOT */
+
+void BPTree__update_root(int root_rrn) {
+  FILE *fp = fopen(ROOT_FILENAME, "r+");
+
+  fprintf(fp, "{Root_rrn: %d}\n", root_rrn);
+
+  fclose(fp);
+}
+
+Node *BPTree__get_root() {
+  FILE *fp = fopen(ROOT_FILENAME, "r");
+  int root_rrn;
+
+  if (fp == NULL)
+    return NULL;
+
+  fscanf(fp, "{Root_rrn: %d}\n", &root_rrn);
+
+  fclose(fp);
+
+  return Node__read(root_rrn);
+}
+
+/* CONSTRUTURES */
+
+BPTree *BPTree__init() {
+  BPTree *tree = malloc(sizeof(BPTree));
+  Node *root = BPTree__get_root();
+
+  tree->get_root = BPTree__get_root;
+  tree->update_root = BPTree__update_root;
+  tree->insert = Node__insert;
+
+  if (root == NULL) {
+    FILE *fp = fopen(ROOT_FILENAME, "w");
+    fprintf(fp, "{Root_rrn: %d}\n", 0);
+    fclose(fp);
+
+    root = Node__create(1);
+  }
+
+  free(root);
+
+  return tree;
+}
+
+Node *Node__create(int is_leaf) {
+  Node *node = malloc(sizeof(Node));
+
+  node->rrn = -1;
+  node->is_leaf = is_leaf;
+  node->num_keys = 0;
+  node->parent = -1;
+  node->next_node = -1;
+
+  for (int i = 0; i < ORDER; i++) {
+    strcpy(node->keys[i], "-----");
+    node->data_rrn[i] = -1;
+    node->children[i] = -1;
+  }
+  node->children[ORDER] = -1;
+
+  Node__append(node);
+
+  return node;
+}
+
+/* BUSCA DE UM NÓ */
+
+Node *Node__search(char *key) {
+  Node *cur = BPTree__get_root();
 
   while (cur->is_leaf == 0) {
     Node *tmp = cur;
@@ -165,7 +208,8 @@ Node *Node__search(Node *root, char *key) {
   return cur;
 }
 
-// Não esquecer de salvar os valores no arquivo
+/* INSERÇÃO DE UM NÓ */
+
 void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
   if (leaf->num_keys != 0) {
 
@@ -201,17 +245,50 @@ void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
   Node__rewrite(leaf, leaf->rrn);
 }
 
-void Node__insert(Node *root, char *key, int data_rrn) {
-  Node *old = Node__search(root, key);
-  Node__insert_at_leaf(old, key, data_rrn);
+void Node__insert_in_parent(Node *old_node, Node *new_node,
+                            char *promoted_key) {
+  Node *root;
 
-  // if (old->num_keys == ORDER) {
-  //   Node *new_node = Node__create(1);
-  //
-  //   new_node->parent = old->parent;
-  //
-  //   int mid = ((int)ceil(old->num_keys / 2)) - 1;
-  //
-  //   new_node->keys
-  // }
+  if ((root = BPTree__get_root())->rrn == old_node->rrn) {
+    Node *new_root = Node__create(0);
+
+    strcpy(new_root->keys[0], promoted_key);
+
+    new_root->children[0] = old_node->rrn;
+    new_root->children[1] = new_node->rrn;
+
+    BPTree__update_root(new_root->rrn);
+
+    old_node->parent = root->rrn;
+    new_node->parent = root->rrn;
+
+    new_root->num_keys++;
+
+    Node__rewrite(old_node, old_node->rrn);
+    Node__rewrite(new_node, new_node->rrn);
+    Node__rewrite(new_root, new_root->rrn);
+
+    return;
+  }
+}
+
+void Node__insert(char *key, int data_rrn) {
+  Node *old_node = Node__search(key);
+  Node__insert_at_leaf(old_node, key, data_rrn);
+
+  if (old_node->num_keys == ORDER) {
+    Node *new_node = Node__create(1);
+
+    new_node->parent = old_node->parent;
+    new_node->next_node = old_node->next_node;
+    old_node->next_node = new_node->rrn;
+
+    int mid = ((int)ceil((float)old_node->num_keys / 2)) - 1;
+
+    Node__copy_keys_and_data(new_node, old_node, mid + 1, old_node->num_keys);
+
+    Node__rewrite(new_node, new_node->rrn);
+
+    Node__insert_in_parent(old_node, new_node, new_node->keys[0]);
+  }
 }

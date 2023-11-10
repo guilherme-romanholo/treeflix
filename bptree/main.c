@@ -5,13 +5,12 @@
 int main(int argc, char *argv[]) {
   BPTree *tree = BPTree__init();
 
-  tree->insert(tree->root, "TES01", 4);
-  tree->insert(tree->root, "AAA01", 2);
-  tree->insert(tree->root, "BAA01", 1);
-  tree->insert(tree->root, "CAA01", 3);
+  tree->insert("ROM03", 2);
+  tree->insert("AOM03", 1);
+  tree->insert("BOM03", 3);
+  tree->insert("MOM03", 4);
 
-  Node *teste = Node__read(0);
-  Node__print(teste);
+  debug();
 
   return EXIT_SUCCESS;
 }
