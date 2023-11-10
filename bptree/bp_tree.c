@@ -1,4 +1,5 @@
 #include "bp_tree.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,6 +17,19 @@ struct node {
   int parent;
   int next_node;
 };
+
+BPTree *BPTree__create() {
+  // FILE *fp = fopen(TREE_FILENAME, );
+
+  BPTree *tree = malloc(sizeof(BPTree));
+
+  tree->root = Node__create(1);
+  tree->insert = Node__insert;
+
+  Node__append(tree->root);
+
+  return tree;
+}
 
 Node *Node__create(int is_leaf) {
   Node *node = malloc(sizeof(Node));
@@ -47,10 +61,20 @@ void debug() {
   free(node);
 }
 
-void Node__write(Node *node) {
+void Node__append(Node *node) {
   FILE *fp = fopen(TREE_FILENAME, "ab");
 
   node->rrn = ftell(fp) / sizeof(Node);
+
+  fwrite(node, sizeof(Node), 1, fp);
+
+  fclose(fp);
+}
+
+void Node__rewrite(Node *node, int rrn) {
+  FILE *fp = fopen(TREE_FILENAME, "rb+");
+
+  fseek(fp, rrn * sizeof(Node), SEEK_SET);
 
   fwrite(node, sizeof(Node), 1, fp);
 
@@ -70,7 +94,25 @@ Node *Node__read(int rrn) {
   return node;
 }
 
-void Node__print(Node *node) { printf("RRN: %d\n", node->rrn); }
+void Node__print(Node *node) {
+  printf("RRN: %d\n", node->rrn);
+  printf("Parent: %d\n", node->parent);
+  printf("Num keys: %d\n", node->num_keys);
+  printf("Keys: ");
+  for (int i = 0; i < ORDER; i++)
+    printf("%s ", node->keys[i]);
+
+  printf("\nData RRN: ");
+  for (int i = 0; i < ORDER; i++)
+    printf("%d ", node->data_rrn[i]);
+
+  printf("\nChildren RRN: ");
+  for (int i = 0; i < ORDER + 1; i++)
+    printf("%d ", node->children[i]);
+
+  printf("\nLeaf: %d\n", node->is_leaf);
+  printf("Next node: %d\n", node->next_node);
+}
 
 int Node__children_size(Node *node) {
   int size = 0;
@@ -107,4 +149,54 @@ Node *Node__search(Node *root, char *key) {
   }
 
   return cur;
+}
+
+// Não esquecer de salvar os valores no arquivo
+void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
+  if (leaf->num_keys != 0) {
+
+    for (int i = 0; i < leaf->num_keys; i++) {
+
+      if (!strcmp(key, leaf->keys[i])) {
+        break;
+      } else if (strcmp(key, leaf->keys[i]) < 0) {
+
+        for (int j = leaf->num_keys; j > i; j--) {
+          strcpy(leaf->keys[j], leaf->keys[j - 1]);
+          leaf->data_rrn[j] = leaf->data_rrn[j - 1];
+        }
+
+        strcpy(leaf->keys[i], key);
+        leaf->data_rrn[i] = data_rrn;
+
+        break;
+      } else if (i + 1 == leaf->num_keys) {
+
+        strcpy(leaf->keys[i + 1], key);
+        break;
+      }
+    }
+  } else {
+    strcpy(leaf->keys[0], key);
+    leaf->data_rrn[0] = data_rrn;
+  }
+
+  leaf->num_keys++;
+
+  Node__rewrite(leaf, leaf->rrn);
+}
+
+void Node__insert(Node *root, char *key, int data_rrn) {
+  Node *old = Node__search(root, key);
+  Node__insert_at_leaf(old, key, data_rrn);
+
+  // if (old->num_keys == ORDER) {
+  //   Node *new_node = Node__create(1);
+  //
+  //   new_node->parent = old->parent;
+  //
+  //   int mid = ((int)ceil(old->num_keys / 2)) - 1;
+  //
+  //   new_node->keys
+  // }
 }
