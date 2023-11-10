@@ -1,85 +1,110 @@
 #include "bp_tree.h"
-#include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #define ORDER 3
 
+const char *TREE_FILENAME = "ibtree.idx";
+
 struct node {
-  int *keys;
+  int rrn;
+  int is_leaf;
+  char keys[ORDER][6];
+  int data_rrn[ORDER];
+  int children[ORDER + 1];
   int num_keys;
-  bool is_leaf;
-  struct node **ptrs;
-  struct node *parent;
-  struct node *next;
+  int parent;
+  int next_node;
 };
 
-struct bptree {
-  Node *root;
-};
+Node *Node__create(int is_leaf) {
+  Node *node = malloc(sizeof(Node));
 
-Node *Node__create(bool is_leaf) {
-  Node *new_node = malloc(sizeof(Node));
+  node->rrn = -1;
+  node->is_leaf = is_leaf;
+  node->num_keys = 0;
+  node->parent = -1;
+  node->next_node = -1;
 
-  new_node->keys = calloc(sizeof(int), ORDER);
-  new_node->ptrs = calloc(sizeof(void), ORDER + 1);
-  new_node->is_leaf = is_leaf;
-  new_node->num_keys = 0;
-  new_node->parent = NULL;
-  new_node->next = NULL;
+  for (int i = 0; i < ORDER; i++) {
+    strcpy(node->keys[i], "-----");
+    node->data_rrn[i] = -1;
+    node->children[i] = -1;
+  }
+  node->children[ORDER] = -1;
 
-  return new_node;
+  return node;
 }
 
-BPTree *BPTree__create() {
-  BPTree *tree = malloc(sizeof(BPTree));
+void debug() {
+  FILE *fp = fopen(TREE_FILENAME, "rb");
+  Node *node = malloc(sizeof(Node));
 
-  tree->root = NULL;
+  while (fread(node, sizeof(Node), 1, fp) == 1)
+    Node__print(node);
 
-  return tree;
+  fclose(fp);
+  free(node);
 }
 
-Node *BPTree__find_leaf(Node *root, int key) {
-  int i;
+void Node__write(Node *node) {
+  FILE *fp = fopen(TREE_FILENAME, "ab");
 
-  if (!root)
-    return root;
+  node->rrn = ftell(fp) / sizeof(Node);
 
-  while (!root->is_leaf) {
-    i = 0;
+  fwrite(node, sizeof(Node), 1, fp);
 
-    while (i < root->num_keys) {
-      if (key >= root->keys[i])
-        i++;
-      else
+  fclose(fp);
+}
+
+Node *Node__read(int rrn) {
+  FILE *fp = fopen(TREE_FILENAME, "rb");
+  Node *node = malloc(sizeof(Node));
+
+  fseek(fp, rrn * sizeof(Node), SEEK_SET);
+
+  fread(node, sizeof(Node), 1, fp);
+
+  fclose(fp);
+
+  return node;
+}
+
+void Node__print(Node *node) { printf("RRN: %d\n", node->rrn); }
+
+int Node__children_size(Node *node) {
+  int size = 0;
+
+  for (int i = 0; i < ORDER + 1; i++) {
+    if (node->children[i] != -1)
+      size++;
+  }
+
+  return size;
+}
+
+Node *Node__search(Node *root, char *key) {
+  Node *cur = root;
+
+  while (cur->is_leaf == 0) {
+    Node *tmp = cur;
+
+    for (int i = 0; i < cur->num_keys; i++) {
+
+      if (!strcmp(key, cur->keys[i])) {
+        cur = Node__read(cur->children[i + 1]);
         break;
+      } else if (strcmp(key, cur->keys[i]) < 0) {
+        cur = Node__read(cur->children[i + 1]);
+        break;
+      } else if (i + 1 == Node__children_size(cur)) {
+        cur = Node__read(cur->children[i + 1]);
+        break;
+      }
     }
 
-    root = root->ptrs[i];
+    free(tmp);
   }
 
-  return root;
-}
-
-Node *BPTree__search(Node *root, Node **leaf_out, int key) {
-  if (!root) {
-    if (leaf_out)
-      *leaf_out = NULL;
-    return NULL;
-  }
-
-  int i;
-  Node *leaf = BPTree__find_leaf(root, key);
-
-  for (i = 0; leaf->num_keys; i++) {
-    if (leaf->keys[i] == key)
-      break;
-  }
-
-  if (leaf_out)
-    *leaf_out = leaf;
-
-  if (i == leaf->num_keys)
-    return NULL;
-  else
-    return leaf->ptrs[i];
+  return cur;
 }
