@@ -194,7 +194,7 @@ Node *Node__search(char *key) {
         cur = Node__read(cur->children[i + 1]);
         break;
       } else if (strcmp(key, cur->keys[i]) < 0) {
-        cur = Node__read(cur->children[i + 1]);
+        cur = Node__read(cur->children[i]);
         break;
       } else if (i + 1 == Node__children_size(cur)) {
         cur = Node__read(cur->children[i + 1]);
@@ -232,6 +232,7 @@ void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
       } else if (i + 1 == leaf->num_keys) {
 
         strcpy(leaf->keys[i + 1], key);
+        leaf->data_rrn[i + 1] = data_rrn;
         leaf->num_keys++;
         break;
       }
@@ -280,6 +281,7 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
     new_root->children[1] = new_node->rrn;
 
     BPTree__update_root(new_root->rrn);
+    root = BPTree__get_root();
 
     old_node->parent = root->rrn;
     new_node->parent = root->rrn;
@@ -300,17 +302,31 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
 
   for (int i = 0; i < children_size; i++) {
     if (parent_node->children[i] == old_node->rrn) {
-      int j;
-
-      for (j = parent_node->num_keys - 1; j > i + 1; j--)
+      // Achamos a posição
+      int pos = 0;
+      for (int j = 0; j < parent_node->num_keys; j++)
+      {
+        if (strcmp(promoted_key, parent_node->keys[j]) > 0)
+        {
+          pos++;
+        }
+      }
+      // Fazemos um shift nas chaves
+      for (int j = parent_node->num_keys; j > pos; j--) {
         strcpy(parent_node->keys[j], parent_node->keys[j - 1]);
-      strcpy(parent_node->keys[j], promoted_key);
+      }
+      strcpy(parent_node->keys[pos], promoted_key);
 
-      for (j = children_size - 1; j > i + 1; j--)
+      // Fazemos um shift nos filhos
+      for (int j = children_size; j > (pos + 1); j--) {
         parent_node->children[j] = parent_node->children[j - 1];
-      parent_node->children[j] = new_node->rrn;
+      }
+      parent_node->children[(pos + 1)] = new_node->rrn;
+      
+      Node__rewrite(parent_node, parent_node->rrn);
     }
-
+  }
+    /* 
     if (parent_node->num_keys == ORDER) {
       Node *parent_dash = Node__create(0);
 
@@ -320,9 +336,28 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
       int mid = ((int)ceil((float)parent_node->num_keys / 2)) - 1;
       strcpy(promoted_key, parent_node->keys[mid]);
 
-      // if mid == 0:
+      int pn_child = Node__children_size(parent_node);
+      for (int j = 0; j < pn_child; j++) {
+        Node *n = Node__read(parent_node->children[j]);
+        n->parent = parent_node->rrn;
+        Node__rewrite(n, n->rrn);
+        free(n);
+      }
+      int pd_child = Node__children_size(parent_dash);
+      for (int j = 0; j < pd_child; j++) {
+        Node *n = Node__read(parent_dash->children[j]);
+        n->parent = parent_dash->rrn;
+        Node__rewrite(n, n->rrn);
+        free(n);
+      }
+
+      Node__insert_in_parent(parent_node, parent_dash, promoted_key);
+
+      Node__append(parent_node);
+      Node__append(parent_dash);
     }
-  }
+    */
+  //}
 }
 
 void Node__insert(char *key, int data_rrn) {
@@ -337,10 +372,10 @@ void Node__insert(char *key, int data_rrn) {
     old_node->next_node = new_node->rrn;
 
     int mid = ((int)ceil((float)old_node->num_keys / 2)) - 1;
-
     Node__copy_keys_and_data(new_node, old_node, mid + 1, old_node->num_keys);
 
     Node__rewrite(new_node, new_node->rrn);
+    Node__rewrite(old_node, old_node->rrn);
 
     Node__insert_in_parent(old_node, new_node, new_node->keys[0]);
   }
