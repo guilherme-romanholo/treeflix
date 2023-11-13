@@ -304,10 +304,8 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
     if (parent_node->children[i] == old_node->rrn) {
       // Achamos a posição
       int pos = 0;
-      for (int j = 0; j < parent_node->num_keys; j++)
-      {
-        if (strcmp(promoted_key, parent_node->keys[j]) > 0)
-        {
+      for (int j = 0; j < parent_node->num_keys; j++) {
+        if (strcmp(promoted_key, parent_node->keys[j]) > 0) {
           pos++;
         }
       }
@@ -324,21 +322,19 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
       parent_node->children[(pos + 1)] = new_node->rrn;
 
       parent_node->num_keys++;
-      
+
       Node__rewrite(parent_node, parent_node->rrn);
     }
-  
-  // DAQUI PRA BAIXO TA A MODA KRL
 
-    /* 
+    // UNICO PROBLEMA É NOS PAIS E FILHOS DA DIREITA
     if (parent_node->num_keys == ORDER) {
       Node *parent_dash = Node__create(0);
 
       parent_dash->parent = parent_node->parent;
       Node__split(parent_dash, parent_node);
 
-      int mid = ((int)ceil((float)parent_node->num_keys / 2)) - 1;
-      strcpy(promoted_key, parent_node->keys[mid]);
+      int mid = ((int)ceil((float)parent_dash->num_keys / 2)) - 1;
+      strcpy(promoted_key, parent_dash->keys[mid]);
 
       int pn_child = Node__children_size(parent_node);
       for (int j = 0; j < pn_child; j++) {
@@ -347,6 +343,7 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
         Node__rewrite(n, n->rrn);
         free(n);
       }
+
       int pd_child = Node__children_size(parent_dash);
       for (int j = 0; j < pd_child; j++) {
         Node *n = Node__read(parent_dash->children[j]);
@@ -355,12 +352,11 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
         free(n);
       }
 
-      Node__insert_in_parent(parent_node, parent_dash, promoted_key);
+      Node__rewrite(parent_node, parent_node->rrn);
+      Node__rewrite(parent_dash, parent_dash->rrn);
 
-      Node__append(parent_node);
-      Node__append(parent_dash);
+      Node__insert_in_parent(parent_node, parent_dash, promoted_key);
     }
-    */
   }
 }
 
