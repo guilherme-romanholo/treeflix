@@ -187,8 +187,9 @@ Node *Node__search(char *key) {
 
   while (cur->is_leaf == 0) {
     Node *tmp = cur;
+    int num_keys = cur->num_keys;
 
-    for (int i = 0; i < cur->num_keys; i++) {
+    for (int i = 0; i < num_keys; i++) {
 
       if (!strcmp(key, cur->keys[i])) {
         cur = Node__read(cur->children[i + 1]);
@@ -322,6 +323,9 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
         parent_node->children[j] = parent_node->children[j - 1];
       }
       parent_node->children[(pos + 1)] = new_node->rrn;
+      
+      // Aumentamos o número de chaves
+      parent_node->num_keys++;
       
       Node__rewrite(parent_node, parent_node->rrn);
     }
