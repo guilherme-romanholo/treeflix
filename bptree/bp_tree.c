@@ -99,6 +99,7 @@ int Node__children_size(Node *node) {
   return size;
 }
 
+// DEPRECIADO, utilizar o split agora
 void Node__copy_keys_and_data(Node *dest, Node *ori, int s, int e) {
   for (int i = s, j = 0; i < e; i++, j++) {
     strcpy(dest->keys[j], ori->keys[i]);
@@ -109,6 +110,28 @@ void Node__copy_keys_and_data(Node *dest, Node *ori, int s, int e) {
 
     dest->num_keys++;
     ori->num_keys--;
+  }
+}
+
+void Node__split(Node *dest, Node *ori) {
+  int mid = ((int)ceil((float)ori->num_keys / 2)) - 1;
+  int children_size = Node__children_size(ori);
+  int num_keys = ori->num_keys;
+
+  for (int i = mid + 1, j = 0; i < num_keys; i++, j++) {
+    strcpy(dest->keys[j], ori->keys[i]);
+    strcpy(ori->keys[i], "-----");
+
+    dest->data_rrn[j] = ori->data_rrn[i];
+    ori->data_rrn[i] = -1;
+
+    dest->num_keys++;
+    ori->num_keys--;
+  }
+
+  for (int i = mid + 1, j = 0; i < children_size; i++, j--) {
+    dest->children[j] = ori->children[i];
+    ori->children[i] = -1;
   }
 }
 
@@ -247,28 +270,6 @@ void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
   Node__rewrite(leaf, leaf->rrn);
 }
 
-// SPLIT EM UTILIDADES
-void Node__split(Node *dest, Node *ori) {
-  int mid = ((int)ceil((float)ori->num_keys / 2)) - 1;
-  int children_size = Node__children_size(ori);
-
-  for (int i = mid + 1, j = 0; i < ori->num_keys; i++, j++) {
-    strcpy(dest->keys[j], ori->keys[i]);
-    strcpy(ori->keys[i], "-----");
-
-    dest->data_rrn[j] = ori->data_rrn[i];
-    ori->data_rrn[i] = -1;
-
-    dest->num_keys++;
-    ori->num_keys--;
-  }
-
-  for (int i = mid + 1, j = 0; i < children_size; i++, j--) {
-    dest->children[j] = ori->children[i];
-    ori->children[i] = -1;
-  }
-}
-
 void Node__insert_in_parent(Node *old_node, Node *new_node,
                             char *promoted_key) {
   Node *root;
@@ -296,8 +297,6 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
     return;
   }
 
-  // DAQUI PRA BAIXO TA A MODA KRL
-  // ATUALIZAR O SPLIT DO COPY KEYS AND DATA INSERT
   Node *parent_node = Node__read(old_node->parent);
   int children_size = Node__children_size(parent_node);
 
@@ -323,13 +322,14 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
         parent_node->children[j] = parent_node->children[j - 1];
       }
       parent_node->children[(pos + 1)] = new_node->rrn;
-      
-      // Aumentamos o número de chaves
+
       parent_node->num_keys++;
       
       Node__rewrite(parent_node, parent_node->rrn);
     }
-  }
+  
+  // DAQUI PRA BAIXO TA A MODA KRL
+
     /* 
     if (parent_node->num_keys == ORDER) {
       Node *parent_dash = Node__create(0);
@@ -361,7 +361,7 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
       Node__append(parent_dash);
     }
     */
-  //}
+  }
 }
 
 void Node__insert(char *key, int data_rrn) {
@@ -375,8 +375,7 @@ void Node__insert(char *key, int data_rrn) {
     new_node->next_node = old_node->next_node;
     old_node->next_node = new_node->rrn;
 
-    int mid = ((int)ceil((float)old_node->num_keys / 2)) - 1;
-    Node__copy_keys_and_data(new_node, old_node, mid + 1, old_node->num_keys);
+    Node__split(new_node, old_node);
 
     Node__rewrite(new_node, new_node->rrn);
     Node__rewrite(old_node, old_node->rrn);
