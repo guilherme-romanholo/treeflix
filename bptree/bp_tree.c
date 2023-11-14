@@ -88,17 +88,6 @@ void Node__print(Node *node) {
   printf("Next node: %d\n", node->next_node);
 }
 
-int Node__children_size(Node *node) {
-  int size = 0;
-
-  for (int i = 0; i < ORDER + 1; i++) {
-    if (node->children[i] != -1)
-      size++;
-  }
-
-  return size;
-}
-
 // DEPRECIADO, utilizar o split agora
 void Node__copy_keys_and_data(Node *dest, Node *ori, int s, int e) {
   for (int i = s, j = 0; i < e; i++, j++) {
@@ -115,7 +104,7 @@ void Node__copy_keys_and_data(Node *dest, Node *ori, int s, int e) {
 
 void Node__split(Node *dest, Node *ori) {
   int mid = ((int)ceil((float)ori->num_keys / 2)) - 1;
-  int children_size = Node__children_size(ori);
+  int children_size = ori->num_keys + 1;
   int num_keys = ori->num_keys;
 
   for (int i = mid + 1, j = 0; i < num_keys; i++, j++) {
@@ -133,6 +122,34 @@ void Node__split(Node *dest, Node *ori) {
     dest->children[j] = ori->children[i];
     ori->children[i] = -1;
   }
+}
+
+char *Node__split_internal(Node *dest, Node *ori) {
+  int mid = ((int)ceil((float)ori->num_keys / 2)) - 1;
+  int children_size = ori->num_keys + 1;
+  int num_keys = ori->num_keys;
+  char *promoted_key = calloc(sizeof(char), 6);
+
+  for (int i = mid + 1, j = 0; i < num_keys; i++, j++) {
+    strcpy(dest->keys[j], ori->keys[i]);
+    strcpy(ori->keys[i], "-----");
+
+    dest->num_keys++;
+    ori->num_keys--;
+  }
+
+  strcpy(promoted_key, dest->keys[0]);
+  for (int i = 0; i < dest->num_keys; i++) {
+    strcpy(dest->keys[i], dest->keys[i + 1]);
+  }
+  dest->num_keys--;
+
+  for (int i = mid + 2, j = 0; i < children_size; i++, j++) {
+    dest->children[j] = ori->children[i];
+    ori->children[i] = -1;
+  }
+
+  return promoted_key;
 }
 
 /* ROOT */
@@ -220,7 +237,7 @@ Node *Node__search(char *key) {
       } else if (strcmp(key, cur->keys[i]) < 0) {
         cur = Node__read(cur->children[i]);
         break;
-      } else if (i + 1 == Node__children_size(cur)) {
+      } else if (i + 1 == cur->num_keys + 1) {
         cur = Node__read(cur->children[i + 1]);
         break;
       }
@@ -298,7 +315,7 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
   }
 
   Node *parent_node = Node__read(old_node->parent);
-  int children_size = Node__children_size(parent_node);
+  int children_size = parent_node->num_keys + 1;
 
   for (int i = 0; i < children_size; i++) {
     if (parent_node->children[i] == old_node->rrn) {
@@ -331,12 +348,10 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
       Node *parent_dash = Node__create(0);
 
       parent_dash->parent = parent_node->parent;
-      Node__split(parent_dash, parent_node);
 
-      int mid = ((int)ceil((float)parent_dash->num_keys / 2)) - 1;
-      strcpy(promoted_key, parent_dash->keys[mid]);
+      promoted_key = Node__split_internal(parent_dash, parent_node);
 
-      int pn_child = Node__children_size(parent_node);
+      int pn_child = parent_node->num_keys + 1;
       for (int j = 0; j < pn_child; j++) {
         Node *n = Node__read(parent_node->children[j]);
         n->parent = parent_node->rrn;
@@ -344,7 +359,7 @@ void Node__insert_in_parent(Node *old_node, Node *new_node,
         free(n);
       }
 
-      int pd_child = Node__children_size(parent_dash);
+      int pd_child = parent_dash->num_keys + 1;
       for (int j = 0; j < pd_child; j++) {
         Node *n = Node__read(parent_dash->children[j]);
         n->parent = parent_dash->rrn;
