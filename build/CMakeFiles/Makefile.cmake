@@ -50,4 +50,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/treeflix.dir/DependInfo.cmake"
+  "CMakeFiles/clean-all.dir/DependInfo.cmake"
   )

@@ -1,3 +1,4 @@
 /home/guilherme/Github/treeflix/build/CMakeFiles/treeflix.dir
+/home/guilherme/Github/treeflix/build/CMakeFiles/clean-all.dir
 /home/guilherme/Github/treeflix/build/CMakeFiles/edit_cache.dir
 /home/guilherme/Github/treeflix/build/CMakeFiles/rebuild_cache.dir

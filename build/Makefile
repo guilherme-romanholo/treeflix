@@ -129,77 +129,114 @@ treeflix/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/build
 .PHONY : treeflix/fast
 
-src/buffer.o: src/buffer.c.o
-.PHONY : src/buffer.o
+#=============================================================================
+# Target rules for targets named clean-all
+
+# Build rule for target.
+clean-all: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean-all
+.PHONY : clean-all
+
+# fast build rule for target.
+clean-all/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean-all.dir/build.make CMakeFiles/clean-all.dir/build
+.PHONY : clean-all/fast
+
+src/bptree/bp_tree.o: src/bptree/bp_tree.c.o
+.PHONY : src/bptree/bp_tree.o
 
 # target to build an object file
-src/buffer.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/buffer.c.o
-.PHONY : src/buffer.c.o
+src/bptree/bp_tree.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/bptree/bp_tree.c.o
+.PHONY : src/bptree/bp_tree.c.o
 
-src/buffer.i: src/buffer.c.i
-.PHONY : src/buffer.i
+src/bptree/bp_tree.i: src/bptree/bp_tree.c.i
+.PHONY : src/bptree/bp_tree.i
 
 # target to preprocess a source file
-src/buffer.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/buffer.c.i
-.PHONY : src/buffer.c.i
+src/bptree/bp_tree.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/bptree/bp_tree.c.i
+.PHONY : src/bptree/bp_tree.c.i
 
-src/buffer.s: src/buffer.c.s
-.PHONY : src/buffer.s
+src/bptree/bp_tree.s: src/bptree/bp_tree.c.s
+.PHONY : src/bptree/bp_tree.s
 
 # target to generate assembly for a file
-src/buffer.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/buffer.c.s
-.PHONY : src/buffer.c.s
+src/bptree/bp_tree.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/bptree/bp_tree.c.s
+.PHONY : src/bptree/bp_tree.c.s
 
-src/main.o: src/main.c.o
-.PHONY : src/main.o
+src/bptree/node.o: src/bptree/node.c.o
+.PHONY : src/bptree/node.o
 
 # target to build an object file
-src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/main.c.o
-.PHONY : src/main.c.o
+src/bptree/node.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/bptree/node.c.o
+.PHONY : src/bptree/node.c.o
 
-src/main.i: src/main.c.i
-.PHONY : src/main.i
+src/bptree/node.i: src/bptree/node.c.i
+.PHONY : src/bptree/node.i
 
 # target to preprocess a source file
-src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/main.c.i
-.PHONY : src/main.c.i
+src/bptree/node.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/bptree/node.c.i
+.PHONY : src/bptree/node.c.i
 
-src/main.s: src/main.c.s
-.PHONY : src/main.s
+src/bptree/node.s: src/bptree/node.c.s
+.PHONY : src/bptree/node.s
 
 # target to generate assembly for a file
-src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/main.c.s
-.PHONY : src/main.c.s
+src/bptree/node.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/bptree/node.c.s
+.PHONY : src/bptree/node.c.s
 
-src/movie.o: src/movie.c.o
-.PHONY : src/movie.o
+src/main/main.o: src/main/main.c.o
+.PHONY : src/main/main.o
 
 # target to build an object file
-src/movie.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie.c.o
-.PHONY : src/movie.c.o
+src/main/main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/main/main.c.o
+.PHONY : src/main/main.c.o
 
-src/movie.i: src/movie.c.i
-.PHONY : src/movie.i
+src/main/main.i: src/main/main.c.i
+.PHONY : src/main/main.i
 
 # target to preprocess a source file
-src/movie.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie.c.i
-.PHONY : src/movie.c.i
+src/main/main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/main/main.c.i
+.PHONY : src/main/main.c.i
 
-src/movie.s: src/movie.c.s
-.PHONY : src/movie.s
+src/main/main.s: src/main/main.c.s
+.PHONY : src/main/main.s
 
 # target to generate assembly for a file
-src/movie.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie.c.s
-.PHONY : src/movie.c.s
+src/main/main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/main/main.c.s
+.PHONY : src/main/main.c.s
+
+src/movie/movie.o: src/movie/movie.c.o
+.PHONY : src/movie/movie.o
+
+# target to build an object file
+src/movie/movie.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie/movie.c.o
+.PHONY : src/movie/movie.c.o
+
+src/movie/movie.i: src/movie/movie.c.i
+.PHONY : src/movie/movie.i
+
+# target to preprocess a source file
+src/movie/movie.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie/movie.c.i
+.PHONY : src/movie/movie.c.i
+
+src/movie/movie.s: src/movie/movie.c.s
+.PHONY : src/movie/movie.s
+
+# target to generate assembly for a file
+src/movie/movie.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/movie/movie.c.s
+.PHONY : src/movie/movie.c.s
 
 # Help Target
 help:
@@ -209,16 +246,20 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... clean-all"
 	@echo "... treeflix"
-	@echo "... src/buffer.o"
-	@echo "... src/buffer.i"
-	@echo "... src/buffer.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
-	@echo "... src/movie.o"
-	@echo "... src/movie.i"
-	@echo "... src/movie.s"
+	@echo "... src/bptree/bp_tree.o"
+	@echo "... src/bptree/bp_tree.i"
+	@echo "... src/bptree/bp_tree.s"
+	@echo "... src/bptree/node.o"
+	@echo "... src/bptree/node.i"
+	@echo "... src/bptree/node.s"
+	@echo "... src/main/main.o"
+	@echo "... src/main/main.i"
+	@echo "... src/main/main.s"
+	@echo "... src/movie/movie.o"
+	@echo "... src/movie/movie.i"
+	@echo "... src/movie/movie.s"
 .PHONY : help
 
 
