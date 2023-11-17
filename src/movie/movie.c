@@ -1,4 +1,5 @@
 #include "../../include/movie.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,34 +34,33 @@ void Movie__destroy(Movie *self) {
   }
 }
 
-char *Movie__make_key(Movie *self) {
-  if (strlen(self->key) < 4 || strlen(self->director) < 3) {
+void Movie__make_key(Movie *self) {
+  if (strlen(self->year) < 4 || strlen(self->director) < 3) {
     printf("Nome do diretor ou ano inválido(s) para criação da chave!\n");
     exit(1);
   }
 
   char *key = calloc(sizeof(char), 6);
 
-  key[0] = self->director[0];
-  key[1] = self->director[1];
-  key[2] = self->director[2];
-  key[3] = self->year[3];
-  key[4] = self->director[2];
+  key[0] = toupper(self->director[0]);
+  key[1] = toupper(self->director[1]);
+  key[2] = toupper(self->director[2]);
+  key[3] = self->year[2];
+  key[4] = self->year[3];
   key[5] = '\0';
 
-  return key;
+  self->key = key;
 }
 
 char *Movie__bufferize(Movie *movie) {
   char *buffer = calloc(sizeof(char), MOVIE_SIZE);
 
-  int size = snprintf(buffer, sizeof(buffer), MOVIE_FORMAT_OUT, movie->key,
-                      movie->pt_title, movie->title, movie->director,
-                      movie->year, movie->country, movie->score);
+  int size = sprintf(buffer, MOVIE_FORMAT_OUT, movie->key, movie->pt_title,
+                     movie->title, movie->director, movie->year, movie->country,
+                     movie->score);
 
-  if (size < MOVIE_SIZE) {
-    memset(buffer + size, '#', sizeof(buffer) - size);
-  }
+  for (int i = size; i < MOVIE_SIZE; i++)
+    buffer[i] = '#';
 
   return buffer;
 }

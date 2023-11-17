@@ -4,6 +4,7 @@ CMakeFiles/treeflix.dir/src/main/main.c.o: \
  /home/guilherme/Github/treeflix/src/main/../../include/bp_tree.h \
  /home/guilherme/Github/treeflix/src/main/../../include/interface.h \
  /home/guilherme/Github/treeflix/src/main/../../include/movie.h \
+ /home/guilherme/Github/treeflix/src/main/../../include/movie.h \
  /usr/include/stdio.h /usr/include/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
  /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
@@ -34,4 +35,6 @@ CMakeFiles/treeflix.dir/src/main/main.c.o: \
  /usr/include/bits/pthreadtypes-arch.h \
  /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
  /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-float.h
+ /usr/include/bits/stdlib-float.h /usr/include/string.h \
+ /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
+ /usr/include/strings.h

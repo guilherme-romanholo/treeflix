@@ -14,6 +14,7 @@ typedef struct movie {
 Movie *Movie__create(char *buffer);
 void Movie__destroy(Movie *self);
 void Movie__append(Movie *movie);
-char *Movie__make_key(Movie *self);
+void Movie__make_key(Movie *self);
+Movie *Movie__read(int rrn);
 
 #endif // !MOVIE_H

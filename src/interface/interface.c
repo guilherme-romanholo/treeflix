@@ -38,7 +38,7 @@ void Interface__read_movie() {
   scanf("%d", &movie->score);
   size += 1;
 
-  movie->key = strdup(Movie__make_key(movie));
+  Movie__make_key(movie);
   size += 5;
 
   if (size > 175) {
@@ -46,11 +46,34 @@ void Interface__read_movie() {
     exit(1);
   }
 
-  printf("Problema no append\n");
-  fgetc(stdin);
-
   Movie__append(movie);
 
   free(buffer);
   Movie__destroy(movie);
+}
+
+void Interface__search_movie() {
+  char key[6];
+  int rrn;
+
+  scanf("%d", &rrn);
+
+  Movie *movie = Movie__read(rrn);
+
+  Interface__print_movie(movie);
+
+  Movie__destroy(movie);
+
+  // puts("Digite a chave primária do filme:");
+  // scanf("%s", key);
+}
+
+void Interface__print_movie(Movie *movie) {
+  printf("Chave: %s\n", movie->key);
+  printf("Título em português: %s\n", movie->pt_title);
+  printf("Título original: %s\n", movie->title);
+  printf("Diretor: %s\n", movie->director);
+  printf("Ano: %s\n", movie->year);
+  printf("País: %s\n", movie->country);
+  printf("Nota: %d\n", movie->score);
 }

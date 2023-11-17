@@ -3,6 +3,7 @@
 #include "../../include/movie.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void test1() {
   BPTree *tree = BPTree__init();
@@ -21,7 +22,10 @@ void test1() {
   debug();
 }
 
-void test2() { Interface__read_movie(); }
+void test2() {
+  // Interface__read_movie();
+  Interface__search_movie();
+}
 
 int main(int argc, char *argv[]) {
   // test1();

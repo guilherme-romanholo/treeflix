@@ -3,6 +3,7 @@ CMakeFiles/treeflix.dir/src/interface/interface.c.o: \
  /usr/include/stdc-predef.h \
  /home/guilherme/Github/treeflix/src/interface/../../include/interface.h \
  /home/guilherme/Github/treeflix/src/interface/../../include/movie.h \
+ /home/guilherme/Github/treeflix/src/interface/../../include/movie.h \
  /usr/include/stdio.h /usr/include/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
  /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
