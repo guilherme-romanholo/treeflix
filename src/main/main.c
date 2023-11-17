@@ -24,7 +24,8 @@ void test1() {
 
 void test2() {
   // Interface__read_movie();
-  Interface__search_movie();
+  // Interface__search_key();
+  Interface__menu();
 }
 
 int main(int argc, char *argv[]) {

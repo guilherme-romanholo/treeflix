@@ -4,6 +4,23 @@
 #include <stdlib.h>
 #include <string.h>
 
+int Interface__menu() {
+  puts("----------------------------------");
+  puts("|  _____             __ _ _      |");
+  puts("| |_   _| _ ___ ___ / _| (_)_ __ |");
+  puts("|   | || '_/ -_) -_)  _| | \\ \\ / |");
+  puts("|   |_||_| \\___\\___|_| |_|_/_\\_\\ |");
+  puts("|--------------------------------|");
+  puts("|                                |");
+  puts("|    (1) Cadastrar novo filme    |");
+  puts("|    (2) Buscar um filme         |");
+  puts("|    (0) Sair                    |");
+  puts("|                                |");
+  puts("----------------------------------");
+
+  return 1;
+}
+
 void Interface__read_movie() {
   Movie *movie = malloc(sizeof(Movie));
   char *buffer = calloc(sizeof(char), 100);
@@ -52,7 +69,7 @@ void Interface__read_movie() {
   Movie__destroy(movie);
 }
 
-void Interface__search_movie() {
+void Interface__search_key() {
   char key[6];
   int rrn;
 

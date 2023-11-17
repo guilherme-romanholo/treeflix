@@ -1,8 +1,8 @@
 #include "../../include/bp_tree.h"
 #include <math.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #define ORDER 4
 
 const char *TREE_FILENAME = "ibtree.idx";
@@ -108,7 +108,6 @@ void Node__print(Node *node) {
   printf("\nLeaf: %d\n", node->is_leaf);
   printf("Next node: %d\n", node->next_node);
 }
-
 
 void Node__update_parent(Node *node) {
   int child_size = node->num_keys + 1;
@@ -222,6 +221,8 @@ void Node__insert(BPTree *tree, char *key, int data_rrn) {
 
     Node__insert_in_parent(tree, old_node, new_node, new_node->keys[0]);
   }
+
+  // Colocar um free para os nós aqui ou no insert in parent
 }
 
 void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn) {
