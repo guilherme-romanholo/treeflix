@@ -6,7 +6,7 @@ find_package(Curses REQUIRED)
 
 include_directories(include)
 
-add_executable(treeflix src/main/main.c src/movie/movie.c src/bptree/bp_tree.c src/bptree/node.c)
+add_executable(treeflix src/main/main.c src/movie/movie.c src/bptree/bp_tree.c src/bptree/node.c src/interface/interface.c)
 
 target_link_libraries(treeflix ${CURSES_LIBRARIES} m)
 

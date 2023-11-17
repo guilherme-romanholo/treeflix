@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/treeflix.dir/src/bptree/bp_tree.c.o.d"
   "CMakeFiles/treeflix.dir/src/bptree/node.c.o"
   "CMakeFiles/treeflix.dir/src/bptree/node.c.o.d"
+  "CMakeFiles/treeflix.dir/src/interface/interface.c.o"
+  "CMakeFiles/treeflix.dir/src/interface/interface.c.o.d"
   "CMakeFiles/treeflix.dir/src/main/main.c.o"
   "CMakeFiles/treeflix.dir/src/main/main.c.o.d"
   "CMakeFiles/treeflix.dir/src/movie/movie.c.o"

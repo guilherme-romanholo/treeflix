@@ -1,8 +1,10 @@
 #include "../../include/bp_tree.h"
+#include "../../include/interface.h"
+#include "../../include/movie.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
+void test1() {
   BPTree *tree = BPTree__init();
 
   tree->insert(tree, "ROM03", 2);
@@ -17,6 +19,13 @@ int main(int argc, char *argv[]) {
   tree->insert(tree, "HOM03", 4);
 
   debug();
+}
+
+void test2() { Interface__read_movie(); }
+
+int main(int argc, char *argv[]) {
+  // test1();
+  test2();
 
   return EXIT_SUCCESS;
 }

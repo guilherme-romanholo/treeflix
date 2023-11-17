@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/guilherme/Github/treeflix/src/bptree/bp_tree.c" "CMakeFiles/treeflix.dir/src/bptree/bp_tree.c.o" "gcc" "CMakeFiles/treeflix.dir/src/bptree/bp_tree.c.o.d"
   "/home/guilherme/Github/treeflix/src/bptree/node.c" "CMakeFiles/treeflix.dir/src/bptree/node.c.o" "gcc" "CMakeFiles/treeflix.dir/src/bptree/node.c.o.d"
+  "/home/guilherme/Github/treeflix/src/interface/interface.c" "CMakeFiles/treeflix.dir/src/interface/interface.c.o" "gcc" "CMakeFiles/treeflix.dir/src/interface/interface.c.o.d"
   "/home/guilherme/Github/treeflix/src/main/main.c" "CMakeFiles/treeflix.dir/src/main/main.c.o" "gcc" "CMakeFiles/treeflix.dir/src/main/main.c.o.d"
   "/home/guilherme/Github/treeflix/src/movie/movie.c" "CMakeFiles/treeflix.dir/src/movie/movie.c.o" "gcc" "CMakeFiles/treeflix.dir/src/movie/movie.c.o.d"
   )

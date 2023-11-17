@@ -190,6 +190,30 @@ src/bptree/node.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/bptree/node.c.s
 .PHONY : src/bptree/node.c.s
 
+src/interface/interface.o: src/interface/interface.c.o
+.PHONY : src/interface/interface.o
+
+# target to build an object file
+src/interface/interface.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/interface/interface.c.o
+.PHONY : src/interface/interface.c.o
+
+src/interface/interface.i: src/interface/interface.c.i
+.PHONY : src/interface/interface.i
+
+# target to preprocess a source file
+src/interface/interface.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/interface/interface.c.i
+.PHONY : src/interface/interface.c.i
+
+src/interface/interface.s: src/interface/interface.c.s
+.PHONY : src/interface/interface.s
+
+# target to generate assembly for a file
+src/interface/interface.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/interface/interface.c.s
+.PHONY : src/interface/interface.c.s
+
 src/main/main.o: src/main/main.c.o
 .PHONY : src/main/main.o
 
@@ -254,6 +278,9 @@ help:
 	@echo "... src/bptree/node.o"
 	@echo "... src/bptree/node.i"
 	@echo "... src/bptree/node.s"
+	@echo "... src/interface/interface.o"
+	@echo "... src/interface/interface.i"
+	@echo "... src/interface/interface.s"
 	@echo "... src/main/main.o"
 	@echo "... src/main/main.i"
 	@echo "... src/main/main.s"
