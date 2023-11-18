@@ -29,8 +29,22 @@ void test2() {
 }
 
 int main(int argc, char *argv[]) {
-  // test1();
-  test2();
+  BPTree *tree = BPTree__init();
+  int opc;
+
+  while ((opc = Interface__menu()) != 0) {
+
+    switch (opc) {
+    case 1:
+      Interface__read_movie(tree);
+      break;
+    default:
+      break;
+    }
+  }
+
+  // Fazer a finalização
+  BPTree__free(tree);
 
   return EXIT_SUCCESS;
 }

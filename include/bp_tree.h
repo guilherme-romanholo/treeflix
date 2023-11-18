@@ -28,6 +28,7 @@ void Node__split_leaf(Node *dest, Node *ori);
 char *Node__split_internal(Node *dest, Node *ori);
 // Search
 Node *Node__search(char *key);
+int Node__search_key(char *key);
 // Insertion
 void Node__insert(BPTree *tree, char *key, int data_rrn);
 void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn);

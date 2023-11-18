@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/home/guilherme/Github/treeflix/CMakeLists.txt"
-  "CMakeFiles/3.27.8/CMakeCCompiler.cmake"
-  "CMakeFiles/3.27.8/CMakeCXXCompiler.cmake"
-  "CMakeFiles/3.27.8/CMakeSystem.cmake"
+  "CMakeFiles/3.27.7/CMakeCCompiler.cmake"
+  "CMakeFiles/3.27.7/CMakeCXXCompiler.cmake"
+  "CMakeFiles/3.27.7/CMakeSystem.cmake"
   "/usr/share/cmake/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"

@@ -65,14 +65,17 @@ char *Movie__bufferize(Movie *movie) {
   return buffer;
 }
 
-void Movie__append(Movie *movie) {
+int Movie__append(Movie *movie) {
   FILE *fp = fopen(MOVIE_FILENAME, "a");
   char *buffer = Movie__bufferize(movie);
+  int rrn = ftell(fp) / MOVIE_SIZE;
 
   fputs(buffer, fp);
 
   fclose(fp);
   free(buffer);
+
+  return rrn;
 }
 
 Movie *Movie__read(int rrn) {

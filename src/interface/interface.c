@@ -1,31 +1,37 @@
 #include "../../include/interface.h"
-#include "../../include/movie.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int Interface__menu() {
-  puts("----------------------------------");
-  puts("|  _____             __ _ _      |");
-  puts("| |_   _| _ ___ ___ / _| (_)_ __ |");
-  puts("|   | || '_/ -_) -_)  _| | \\ \\ / |");
-  puts("|   |_||_| \\___\\___|_| |_|_/_\\_\\ |");
-  puts("|--------------------------------|");
-  puts("|                                |");
-  puts("|    (1) Cadastrar novo filme    |");
-  puts("|    (2) Buscar um filme         |");
-  puts("|    (0) Sair                    |");
-  puts("|                                |");
-  puts("----------------------------------");
+  int opc;
 
-  return 1;
+  do {
+    puts("----------------------------------");
+    puts("|  _____             __ _ _      |");
+    puts("| |_   _| _ ___ ___ / _| (_)_ __ |");
+    puts("|   | || '_/ -_) -_)  _| | \\ \\ / |");
+    puts("|   |_||_| \\___\\___|_| |_|_/_\\_\\ |");
+    puts("|--------------------------------|");
+    puts("|                                |");
+    puts("|    (1) Cadastrar novo filme    |");
+    puts("|    (2) Buscar um filme         |");
+    puts("|    (0) Sair                    |");
+    puts("|                                |");
+    puts("----------------------------------");
+    printf(">> ");
+    scanf("%d", &opc);
+  } while (opc < 0 || opc > 6);
+
+  return opc;
 }
 
-void Interface__read_movie() {
+void Interface__read_movie(BPTree *tree) {
   Movie *movie = malloc(sizeof(Movie));
   char *buffer = calloc(sizeof(char), 100);
   int size = 0;
 
+  // Coleta de informações do usuário
   puts("Digite o nome do filme em português: ");
   scanf(" %[^\n]", buffer);
   movie->pt_title = strdup(buffer);
@@ -55,15 +61,26 @@ void Interface__read_movie() {
   scanf("%d", &movie->score);
   size += 1;
 
+  // Criação da chave
   Movie__make_key(movie);
   size += 5;
 
   if (size > 175) {
     puts("Campos ultrapassam o tamanho máximo do registro!");
+    // Em vez de exit(1) fazer uma função de finalizaçao
     exit(1);
   }
 
-  Movie__append(movie);
+  if (Node__search_key(movie->key) != -1) {
+    free(buffer);
+    Movie__destroy(movie);
+    puts("O filme já existe na base de dados!");
+    return;
+  }
+
+  // Inserção no arquivo de dados
+  int movie_rrn = Movie__append(movie);
+  tree->insert(tree, movie->key, movie_rrn);
 
   free(buffer);
   Movie__destroy(movie);

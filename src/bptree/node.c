@@ -201,6 +201,21 @@ Node *Node__search(char *key) {
   return cur;
 }
 
+int Node__search_key(char *key) { 
+  Node *node = Node__search(key);
+  int data_rrn = -1;
+
+  for (int i = 0; i < node->num_keys; i++) {
+    if (!strcmp(key, node->keys[i])) {
+      data_rrn = node->data_rrn[i];
+      break;
+    }
+  }
+
+  free(node);
+  return data_rrn;
+}
+
 /* INSERTION */
 
 void Node__insert(BPTree *tree, char *key, int data_rrn) {

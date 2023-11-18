@@ -140,6 +140,7 @@ CMakeFiles/treeflix.dir/src/bptree/node.c.o: /home/guilherme/Github/treeflix/src
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stddef.h
 
 CMakeFiles/treeflix.dir/src/interface/interface.c.o: /home/guilherme/Github/treeflix/src/interface/interface.c \
+  /home/guilherme/Github/treeflix/include/bp_tree.h \
   /home/guilherme/Github/treeflix/include/interface.h \
   /home/guilherme/Github/treeflix/include/movie.h \
   /usr/include/alloca.h \
