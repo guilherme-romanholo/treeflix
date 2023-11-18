@@ -26,7 +26,7 @@ int Interface__menu() {
   return opc;
 }
 
-void Interface__read_movie(BPTree *tree) {
+void Interface__read_movie(BPTree *tree, List **list) {
   Movie *movie = malloc(sizeof(Movie));
   char *buffer = calloc(sizeof(char), 100);
   int size = 0;
@@ -81,12 +81,13 @@ void Interface__read_movie(BPTree *tree) {
   // Inserção no arquivo de dados
   int movie_rrn = Movie__append(movie);
   tree->insert(tree, movie->key, movie_rrn);
+  List__insert(list, List__create_node(movie->key, movie->pt_title));
 
   free(buffer);
   Movie__destroy(movie);
 }
 
-void Interface__movie_search(BPTree *tree) {
+void Interface__movie_search(BPTree *tree, List *list) {
   char key[6];
   int opc;
 
@@ -110,6 +111,10 @@ void Interface__movie_search(BPTree *tree) {
   switch (opc) {
   case 1:
     Interface__movie_search_key(tree);
+    return;
+  case 2:
+    Interface__movie_search_title(list);
+    return;
   default:
     return;
   }
@@ -125,7 +130,7 @@ void Interface__movie_search_key(BPTree *tree) {
 
   rrn = Node__search_key(key);
   
-  if (rrn == - 1) {
+  if (rrn == -1) {
     puts("O filme buscado não existe!");
     return;
   }
@@ -134,6 +139,32 @@ void Interface__movie_search_key(BPTree *tree) {
   Interface__print_movie(movie);
 
   Movie__destroy(movie);
+}
+
+void Interface__movie_search_title(List *list) { 
+  char title[200], *key;
+  int rrn;
+  Movie *movie;
+
+  puts("Digite o título do filme procurado:");
+  scanf(" %s", title);
+
+  key = List__search(list, title);
+
+  if (key == NULL) {
+    puts("O filme buscado não existe!");
+    return;
+  }
+
+  rrn = Node__search_key(key);
+
+  movie = Movie__read(rrn);
+  Interface__print_movie(movie);
+
+  Movie__destroy(movie);
+
+  // Problema de buffer
+  fgetc(stdin);
 }
 
 void Interface__print_movie(Movie *movie) {

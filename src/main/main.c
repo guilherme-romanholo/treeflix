@@ -1,6 +1,7 @@
 #include "../../include/bp_tree.h"
 #include "../../include/interface.h"
 #include "../../include/movie.h"
+#include "../../include/list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,16 +31,17 @@ void test2() {
 
 int main(int argc, char *argv[]) {
   BPTree *tree = BPTree__init();
+  List *list = List__init();
   int opc;
 
   while ((opc = Interface__menu()) != 0) {
 
     switch (opc) {
     case 1:
-      Interface__read_movie(tree);
+      Interface__read_movie(tree, &list);
       break;
     case 2:
-      Interface__movie_search(tree);
+      Interface__movie_search(tree, list);
       break;
     default:
       break;
@@ -48,6 +50,7 @@ int main(int argc, char *argv[]) {
 
   // Fazer a finalização
   BPTree__free(tree);
+  List__destroy(list);
 
   return EXIT_SUCCESS;
 }

@@ -214,6 +214,30 @@ src/interface/interface.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/interface/interface.c.s
 .PHONY : src/interface/interface.c.s
 
+src/list/list.o: src/list/list.c.o
+.PHONY : src/list/list.o
+
+# target to build an object file
+src/list/list.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/list/list.c.o
+.PHONY : src/list/list.c.o
+
+src/list/list.i: src/list/list.c.i
+.PHONY : src/list/list.i
+
+# target to preprocess a source file
+src/list/list.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/list/list.c.i
+.PHONY : src/list/list.c.i
+
+src/list/list.s: src/list/list.c.s
+.PHONY : src/list/list.s
+
+# target to generate assembly for a file
+src/list/list.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/treeflix.dir/build.make CMakeFiles/treeflix.dir/src/list/list.c.s
+.PHONY : src/list/list.c.s
+
 src/main/main.o: src/main/main.c.o
 .PHONY : src/main/main.o
 
@@ -281,6 +305,9 @@ help:
 	@echo "... src/interface/interface.o"
 	@echo "... src/interface/interface.i"
 	@echo "... src/interface/interface.s"
+	@echo "... src/list/list.o"
+	@echo "... src/list/list.i"
+	@echo "... src/list/list.s"
 	@echo "... src/main/main.o"
 	@echo "... src/main/main.i"
 	@echo "... src/main/main.s"
