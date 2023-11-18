@@ -38,6 +38,9 @@ int main(int argc, char *argv[]) {
     case 1:
       Interface__read_movie(tree);
       break;
+    case 2:
+      Interface__movie_search(tree);
+      break;
     default:
       break;
     }

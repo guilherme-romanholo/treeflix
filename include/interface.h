@@ -6,7 +6,8 @@
 
 void Interface__read_movie(BPTree *tree);
 void Interface__print_movie(Movie *movie);
-void Interface__search_key();
 int Interface__menu();
+void Interface__movie_search(BPTree *tree);
+void Interface__movie_search_key(BPTree *tree);
 
 #endif // !INTERFACE_H

@@ -86,20 +86,54 @@ void Interface__read_movie(BPTree *tree) {
   Movie__destroy(movie);
 }
 
-void Interface__search_key() {
+void Interface__movie_search(BPTree *tree) {
+  char key[6];
+  int opc;
+
+  do {
+    puts("----------------------------------");
+    puts("|  _____             __ _ _      |");
+    puts("| |_   _| _ ___ ___ / _| (_)_ __ |");
+    puts("|   | || '_/ -_) -_)  _| | \\ \\ / |");
+    puts("|   |_||_| \\___\\___|_| |_|_/_\\_\\ |");
+    puts("|--------------------------------|");
+    puts("|                                |");
+    puts("|    (1) Buscar pela chave       |");
+    puts("|    (2) Buscar pelo título      |");
+    puts("|    (0) Voltar                  |");
+    puts("|                                |");
+    puts("----------------------------------");
+    printf(">> ");
+    scanf("%d", &opc);
+  } while (opc < 0 || opc > 2);
+
+  switch (opc) {
+  case 1:
+    Interface__movie_search_key(tree);
+  default:
+    return;
+  }
+}
+
+void Interface__movie_search_key(BPTree *tree) {
   char key[6];
   int rrn;
+  Movie *movie;
 
-  scanf("%d", &rrn);
+  puts("Digite a chave do filme procurado:");
+  scanf(" %s", key);
 
-  Movie *movie = Movie__read(rrn);
+  rrn = Node__search_key(key);
+  
+  if (rrn == - 1) {
+    puts("O filme buscado não existe!");
+    return;
+  }
 
+  movie = Movie__read(rrn);
   Interface__print_movie(movie);
 
   Movie__destroy(movie);
-
-  // puts("Digite a chave primária do filme:");
-  // scanf("%s", key);
 }
 
 void Interface__print_movie(Movie *movie) {
