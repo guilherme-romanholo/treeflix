@@ -1,4 +1,6 @@
 #include "../../include/bp_tree.h"
+#include "../../include/interface.h"
+#include "../../include/movie.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -86,6 +88,52 @@ void debug() {
 
   fclose(fp);
   free(node);
+}
+
+void Node__list_range(Node *node, char *key) {
+  Movie *movie;
+  int pos = 0, node_rrn;
+
+  while (strcmp(node->keys[pos], key) > 0)
+    pos++;
+
+  for (int i = pos; i < node->num_keys; i++) {
+    movie = Movie__read(node->data_rrn[i]);
+    Interface__print_movie(movie);
+    Movie__destroy(movie);
+  }
+
+  node_rrn = node->next_node;
+  node = Node__read(node_rrn);
+
+  while (node_rrn != -1) {
+
+    for (int i = 0; i < node->num_keys; i++) {
+      movie = Movie__read(node->data_rrn[i]);
+      Interface__print_movie(movie);
+      Movie__destroy(movie);
+    }
+
+    node_rrn = node->next_node;
+    free(node);
+    node = Node__read(node_rrn);
+  }
+}
+
+char *Node__get_lower_key(BPTree *tree) {
+  Node *root = tree->root;
+  int child_rrn;
+  char *key;
+
+  while (root->is_leaf == 0) {
+    child_rrn = root->children[0];
+    free(root);
+    root = Node__read(child_rrn);
+  }
+
+  key = strdup(root->keys[0]);
+
+  return key;
 }
 
 void Node__print(Node *node) {
@@ -201,7 +249,7 @@ Node *Node__search(char *key) {
   return cur;
 }
 
-int Node__search_key(char *key) { 
+int Node__search_key(char *key) {
   Node *node = Node__search(key);
   int data_rrn = -1;
 
@@ -236,6 +284,9 @@ void Node__insert(BPTree *tree, char *key, int data_rrn) {
 
     Node__insert_in_parent(tree, old_node, new_node, new_node->keys[0]);
   }
+
+  free(tree->root);
+  tree->root = BPTree__read_root();
 
   // Colocar um free para os nós aqui ou no insert in parent
 }
@@ -287,16 +338,16 @@ void Node__insert_in_parent(BPTree *tree, Node *old_node, Node *new_node,
     new_root->children[0] = old_node->rrn;
     new_root->children[1] = new_node->rrn;
 
-    tree->update_root(tree, new_root->rrn);
-
-    old_node->parent = tree->root->rrn;
-    new_node->parent = tree->root->rrn;
+    old_node->parent = new_root->rrn;
+    new_node->parent = new_root->rrn;
 
     new_root->num_keys++;
 
     Node__write(old_node, old_node->rrn);
     Node__write(new_node, new_node->rrn);
     Node__write(new_root, new_root->rrn);
+
+    tree->update_root(tree, new_root->rrn);
 
     return;
   }

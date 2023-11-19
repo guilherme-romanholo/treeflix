@@ -16,5 +16,6 @@ void Movie__destroy(Movie *self);
 int Movie__append(Movie *movie);
 void Movie__make_key(Movie *self);
 Movie *Movie__read(int rrn);
+void Movie__write(Movie *movie, int rrn);
 
 #endif // !MOVIE_H

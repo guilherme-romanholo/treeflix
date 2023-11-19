@@ -72,8 +72,8 @@ int Movie__append(Movie *movie) {
 
   fputs(buffer, fp);
 
-  fclose(fp);
   free(buffer);
+  fclose(fp);
 
   return rrn;
 }
@@ -92,4 +92,15 @@ Movie *Movie__read(int rrn) {
   fclose(fp);
 
   return movie;
+}
+
+void Movie__write(Movie *movie, int rrn) {
+  FILE *fp = fopen(MOVIE_FILENAME, "r+");
+  char *buffer = Movie__bufferize(movie);
+
+  fseek(fp, rrn * MOVIE_SIZE, SEEK_SET);
+  fputs(buffer, fp);
+
+  free(buffer);
+  fclose(fp);
 }

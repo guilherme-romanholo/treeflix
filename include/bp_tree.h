@@ -10,7 +10,6 @@ typedef struct bptree {
   void (*update_root)(struct bptree *, int);
 } BPTree;
 
-
 /* ========== Node ========== */
 
 // Constructor
@@ -21,6 +20,8 @@ void Node__append(Node *node);
 void Node__write(Node *node, int rrn);
 // Utilities
 void debug();
+void Node__list_range(Node *node, char *key);
+char *Node__get_lower_key(BPTree *tree);
 void Node__print(Node *node);
 void Node__update_parent(Node *node);
 // Split
@@ -32,11 +33,12 @@ int Node__search_key(char *key);
 // Insertion
 void Node__insert(BPTree *tree, char *key, int data_rrn);
 void Node__insert_at_leaf(Node *leaf, char *key, int data_rrn);
-void Node__insert_in_parent(BPTree *tree, Node *old_node, Node *new_node, char *promoted_key);
+void Node__insert_in_parent(BPTree *tree, Node *old_node, Node *new_node,
+                            char *promoted_key);
 
 /* ========== B+ Tree ========== */
 
-// Constructor 
+// Constructor
 BPTree *BPTree__init();
 // Destructor
 void BPTree__free(BPTree *tree);

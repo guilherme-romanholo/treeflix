@@ -16,6 +16,8 @@ int Interface__menu() {
     puts("|                                |");
     puts("|    (1) Cadastrar novo filme    |");
     puts("|    (2) Buscar um filme         |");
+    puts("|    (3) Atualizar nota          |");
+    puts("|    (4) Listar filmes           |");
     puts("|    (0) Sair                    |");
     puts("|                                |");
     puts("----------------------------------");
@@ -88,7 +90,6 @@ void Interface__read_movie(BPTree *tree, List **list) {
 }
 
 void Interface__movie_search(BPTree *tree, List *list) {
-  char key[6];
   int opc;
 
   do {
@@ -129,7 +130,7 @@ void Interface__movie_search_key(BPTree *tree) {
   scanf(" %s", key);
 
   rrn = Node__search_key(key);
-  
+
   if (rrn == -1) {
     puts("O filme buscado não existe!");
     return;
@@ -141,7 +142,7 @@ void Interface__movie_search_key(BPTree *tree) {
   Movie__destroy(movie);
 }
 
-void Interface__movie_search_title(List *list) { 
+void Interface__movie_search_title(List *list) {
   char title[200], *key;
   int rrn;
   Movie *movie;
@@ -167,7 +168,86 @@ void Interface__movie_search_title(List *list) {
   fgetc(stdin);
 }
 
+void Interface__update_score() {
+  char key[6];
+  int rrn, score;
+  Movie *movie;
+
+  puts("Digite a chave do filme procurado:");
+  scanf(" %s", key);
+
+  rrn = Node__search_key(key);
+
+  if (rrn == -1) {
+    puts("O filme buscado não existe!");
+    return;
+  }
+
+  movie = Movie__read(rrn);
+
+  printf("Digite a nova nota para o filme %s:\n", movie->title);
+  scanf("%d", &score);
+
+  movie->score = score;
+
+  Movie__write(movie, rrn);
+  Movie__destroy(movie);
+
+  puts("Nota atualizada com sucesso!");
+}
+
+void Interface__movie_list(BPTree *tree) {
+  int opc;
+
+  do {
+    puts("----------------------------------");
+    puts("|  _____             __ _ _      |");
+    puts("| |_   _| _ ___ ___ / _| (_)_ __ |");
+    puts("|   | || '_/ -_) -_)  _| | \\ \\ / |");
+    puts("|   |_||_| \\___\\___|_| |_|_/_\\_\\ |");
+    puts("|--------------------------------|");
+    puts("|                                |");
+    puts("|    (1) Listar um range         |");
+    puts("|    (2) Listar todos os filmes  |");
+    puts("|    (0) Voltar                  |");
+    puts("|                                |");
+    puts("----------------------------------");
+    printf(">> ");
+    scanf("%d", &opc);
+  } while (opc < 0 || opc > 2);
+
+  switch (opc) {
+  case 1:
+    Interface__movie_list_range(tree);
+    return;
+  case 2:
+    Interface__movie_list_all(tree);
+    return;
+  default:
+    return;
+  }
+}
+
+void Interface__movie_list_range(BPTree *tree) {
+  Node *node;
+  char key[6];
+
+  puts("Digite a chave para o range da listagem:");
+  scanf(" %s", key);
+
+  node = Node__search(key);
+
+  Node__list_range(node, key);
+}
+
+void Interface__movie_list_all(BPTree *tree) {
+  char *key = Node__get_lower_key(tree);
+
+  Node__list_range(tree->root, key);
+}
+
 void Interface__print_movie(Movie *movie) {
+  // Colocar os fgetc e clear aqui
   printf("Chave: %s\n", movie->key);
   printf("Título em português: %s\n", movie->pt_title);
   printf("Título original: %s\n", movie->title);
