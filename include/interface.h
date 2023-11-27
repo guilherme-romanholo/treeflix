@@ -1,9 +1,9 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include "movie.h"
 #include "bp_tree.h"
 #include "list.h"
+#include "movie.h"
 
 void Interface__read_movie(BPTree *tree, List **list);
 void Interface__print_movie(Movie *movie);

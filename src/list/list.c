@@ -100,7 +100,7 @@ void List__write(List *list, FILE *fp) {
     fprintf(fp, LIST_FORMAT_OUT, list->title, list->key);
 
     list = list->next;
-    
+
     free(aux->title);
     free(aux->key);
     free(aux);

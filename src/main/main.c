@@ -25,6 +25,9 @@ int main(int argc, char *argv[]) {
     case 4:
       Interface__movie_list(tree);
       break;
+    case 5:
+      debug();
+      break;
     default:
       break;
     }

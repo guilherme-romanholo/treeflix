@@ -18,6 +18,7 @@ int Interface__menu() {
     puts("|    (2) Buscar um filme         |");
     puts("|    (3) Atualizar nota          |");
     puts("|    (4) Listar filmes           |");
+    puts("|    (5) Printar arvore          |");
     puts("|    (0) Sair                    |");
     puts("|                                |");
     puts("----------------------------------");
@@ -33,33 +34,40 @@ void Interface__read_movie(BPTree *tree, List **list) {
   char *buffer = calloc(sizeof(char), 100);
   int size = 0;
 
+  puts("----------------------------------");
+  puts("|  _____             __ _ _      |");
+  puts("| |_   _| _ ___ ___ / _| (_)_ __ |");
+  puts("|   | || '_/ -_) -_)  _| | \\ \\ / |");
+  puts("|   |_||_| \\___\\___|_| |_|_/_\\_\\ |");
+  puts("|--------------------------------|\n");
+
   // Coleta de informações do usuário
-  puts("Digite o nome do filme em português: ");
+  printf("Digite o nome do filme em português:\n>> ");
   scanf(" %[^\n]", buffer);
   movie->pt_title = strdup(buffer);
   size += strlen(buffer);
 
-  puts("Digite o nome do filme original: ");
+  printf("Digite o nome do filme original:\n>> ");
   scanf(" %[^\n]", buffer);
   movie->title = strdup(buffer);
   size += strlen(buffer);
 
-  puts("Digite o nome do diretor (Sobrenome, Nome): ");
+  printf("Digite o nome do diretor (Sobrenome, Nome):\n>> ");
   scanf(" %[^\n]", buffer);
   movie->director = strdup(buffer);
   size += strlen(buffer);
 
-  puts("Digite o ano de lançamento: ");
+  printf("Digite o ano de lançamento:\n>> ");
   scanf(" %[^\n]", buffer);
   movie->year = strdup(buffer);
   size += strlen(buffer);
 
-  puts("Digite o país de origem: ");
+  printf("Digite o país de origem:\n>> ");
   scanf(" %[^\n]", buffer);
   movie->country = strdup(buffer);
   size += strlen(buffer);
 
-  puts("Digite a nota do filme (0 - 9): ");
+  printf("Digite a nota do filme (0 - 9):\n>> ");
   scanf("%d", &movie->score);
   size += 1;
 
@@ -68,9 +76,10 @@ void Interface__read_movie(BPTree *tree, List **list) {
   size += 5;
 
   if (size > 175) {
+    free(buffer);
+    Movie__destroy(movie);
     puts("Campos ultrapassam o tamanho máximo do registro!");
-    // Em vez de exit(1) fazer uma função de finalizaçao
-    exit(1);
+    return;
   }
 
   if (Node__search_key(movie->key) != -1) {
@@ -87,6 +96,8 @@ void Interface__read_movie(BPTree *tree, List **list) {
 
   free(buffer);
   Movie__destroy(movie);
+
+  puts("Filme cadastrado com sucesso!");
 }
 
 void Interface__movie_search(BPTree *tree, List *list) {
@@ -147,8 +158,8 @@ void Interface__movie_search_title(List *list) {
   int rrn;
   Movie *movie;
 
-  puts("Digite o título do filme procurado:");
-  scanf(" %s", title);
+  puts("Digite o título em português do filme procurado:");
+  scanf(" %[^\n]", title);
 
   key = List__search(list, title);
 
@@ -248,6 +259,7 @@ void Interface__movie_list_all(BPTree *tree) {
 
 void Interface__print_movie(Movie *movie) {
   // Colocar os fgetc e clear aqui
+  puts("----------------------------------");
   printf("Chave: %s\n", movie->key);
   printf("Título em português: %s\n", movie->pt_title);
   printf("Título original: %s\n", movie->title);
@@ -255,4 +267,5 @@ void Interface__print_movie(Movie *movie) {
   printf("Ano: %s\n", movie->year);
   printf("País: %s\n", movie->country);
   printf("Nota: %d\n", movie->score);
+  puts("----------------------------------");
 }
