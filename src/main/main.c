@@ -5,10 +5,12 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
+  // Faz a inicialização da árvore b+ e da lista de títulos
   BPTree *tree = BPTree__init();
   List *list = List__init();
   int opc;
 
+  // Laço principal para mostrar as opções e interação do usuário
   while ((opc = Interface__menu()) != 0) {
     system("clear");
 
@@ -35,7 +37,7 @@ int main(int argc, char *argv[]) {
     fgetc(stdin);
   }
 
-  // Fazer a finalização
+  // Realiza a liberação da memória utilizada pelo programa
   BPTree__free(tree);
   List__destroy(list);
 
