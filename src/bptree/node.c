@@ -107,27 +107,30 @@ void debug() {
 void Node__list_range(Node *node, char *key) {
   Movie *movie;
   int pos = 0, node_rrn;
+  int flag = 1;
 
   // Recebemos como parâmetro o nó em que a primeira
   // chave do range está localizada, então iteramos
   // até a sua posição
-  while (strcmp(node->keys[pos], key) > 0)
+  while (strcmp(node->keys[pos], key) < 0)
     pos++;
 
   // Printamos todos os filmes a partir dessa chave
-  for (int i = pos + 1; i < node->num_keys; i++) {
+  for (int i = pos; i < node->num_keys; i++) {
     movie = Movie__read(node->data_rrn[i]);
     Interface__print_movie(movie);
     Movie__destroy(movie);
+    flag = 0;
   }
 
   // Pegamos o rrn da próxima folha
   node_rrn = node->next_node;
-  node = Node__read(node_rrn);
 
   // Fazemos esse processo novamente até não
   // existirem mais folhas
   while (node_rrn != -1) {
+    flag = 0;
+    node = Node__read(node_rrn);
 
     for (int i = 0; i < node->num_keys; i++) {
       movie = Movie__read(node->data_rrn[i]);
@@ -137,8 +140,10 @@ void Node__list_range(Node *node, char *key) {
 
     node_rrn = node->next_node;
     free(node);
-    node = Node__read(node_rrn);
   }
+
+  if (flag)
+    puts("Nenhum filme para ser listado!");
 }
 
 // Função responsável por retoranar a menor
@@ -286,7 +291,7 @@ Node *Node__search(char *key) {
         // Caso a chave seja menor, carrega o filho da esquerda
         cur = Node__read(cur->children[i]);
         break;
-      } else if (i + 1 == cur->num_keys + 1) {
+      } else if (i + 1 == cur->num_keys) {
         // Caso seja a ultima chave, carrega o filho da direita
         cur = Node__read(cur->children[i + 1]);
         break;
