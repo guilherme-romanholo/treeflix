@@ -11,6 +11,16 @@ const char *MOVIE_FILENAME = "movies.dat";
 // Tamanho máximo de um filme
 const int MOVIE_SIZE = 192;
 
+void Movie__init() {
+  FILE *fp = fopen(MOVIE_FILENAME, "r");
+
+  // Caso o arquivo não exista cria ele
+  if (fp == NULL)
+    fp = fopen(MOVIE_FILENAME, "w");
+
+  fclose(fp);
+}
+
 // Função responsável por criar um filme
 Movie *Movie__create(char *buffer) {
   Movie *movie = malloc(sizeof(Movie));

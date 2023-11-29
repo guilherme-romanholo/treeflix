@@ -5,7 +5,9 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-  // Faz a inicialização da árvore b+ e da lista de títulos
+  // Faz a inicialização da árvore b+ e da lista de títulos, além do arquivo de
+  // dados
+  Movie__init();
   BPTree *tree = BPTree__init();
   List *list = List__init();
   int opc;

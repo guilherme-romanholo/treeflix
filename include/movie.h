@@ -11,11 +11,17 @@ typedef struct movie {
   int score;
 } Movie;
 
+/* Constructor and Destructor */
+void Movie__init();
 Movie *Movie__create(char *buffer);
 void Movie__destroy(Movie *self);
+
+/* File Manipulation */
 int Movie__append(Movie *movie);
-void Movie__make_key(Movie *self);
 Movie *Movie__read(int rrn);
 void Movie__write(Movie *movie, int rrn);
+
+/* Make Key */
+void Movie__make_key(Movie *self);
 
 #endif // !MOVIE_H
