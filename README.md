@@ -3,6 +3,7 @@
 ## Estrutura de diretórios
 - build/ : Diretório responsável por construir o executável do projeto e linkar as dependências
 - cmake/ : Diretório responsável por ter alguns macros para a utilização do `make clean-all`
+- test/ : Diretório responsável por ter uma função para teste da inserção na Árvore B+
 - include/ : Diretório responsável por armazenar os arquivos de cabeçalho .h
 - src/ : Diretório responsável por armazenar os códigos fonte do projeto
 
